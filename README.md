@@ -1,7 +1,9 @@
 # ga4gh-search-client-r
 A GA4GH Search client for R.  To use, start up R and type:
 ```
-devtools::install_github("yourusername/ga4gh.search")
+install.packages("devtools")
+devtools::install_github("DNAstack/ga4gh-search-client-r")
 ```
 
-If you don't have 
+Type `??ga4gh.search` for help.  
+
