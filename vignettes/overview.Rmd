@@ -1,0 +1,32 @@
+---
+title: "Overview"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{overview}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+This package is used to perform operations against the GA4GH search API, and receive responses in R data frames.
+
+## Usage:
+```
+library(ga4gh.search)
+# URL to a GA4GH search implementation.
+baseurl <- "https://localhost/ga4gh_search_implementation"
+
+# list available tables, get the result as a dataframe.
+tables <- ga4gh_list_tables(baseurl)
+
+# Execute a query, get the results as a dataframe.
+df <- ga4gh_search(baseurl, paste("SELECT * FROM ", tables$name[1], " LIMIT 50"))
+
+```
+
+
