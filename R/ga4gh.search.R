@@ -5,7 +5,7 @@
 #' @export
 ga4gh_list_tables <- function(url){
   r <- httr::GET(paste(url,"/tables", sep=""), httr::content_type("application/json"));
-  json <- jsonlite::fromJSON(content(r, "text"));
+  json <- jsonlite::fromJSON(httr::content(r, "text"));
   df<-data.frame()
   while(!is.null(json$pagination$next_page_url)){
     cat(".")
@@ -13,7 +13,7 @@ ga4gh_list_tables <- function(url){
       df<-rbind(df, data.frame(name=json$tables$name, data_model=json$tables$data_model))
     }
     r <- httr::GET(json$pagination$next_page_url, httr::content_type("application/json"));
-    json <- jsonlite::fromJSON(content(r, "text"));
+    json <- jsonlite::fromJSON(httr::content(r, "text"));
   }
   if(is.data.frame(json$tables)){
     cat(".")
@@ -31,7 +31,7 @@ ga4gh_list_tables <- function(url){
 #' @export
 ga4gh_search <- function(url, query){
   r <- httr::POST(paste(url,"/search", sep=""), "body"=paste("{\"query\":\"", query, "\"}", sep=""), httr::content_type("application/json"));
-  json <- jsonlite::fromJSON(content(r, "text"));
+  json <- jsonlite::fromJSON(httr::content(r, "text"));
   
   df <- data.frame()
   while(!is.null(json$pagination$next_page_url)){
@@ -40,7 +40,7 @@ ga4gh_search <- function(url, query){
       df<-rbind(df, json$data)
     }
     r <- httr::GET(json$pagination$next_page_url, httr::content_type("application/json"));
-    json <- jsonlite::fromJSON(content(r, "text"));
+    json <- jsonlite::fromJSON(httr::content(r, "text"));
   }
   
   if(is.list(json$data) && length(json$data)>0){
